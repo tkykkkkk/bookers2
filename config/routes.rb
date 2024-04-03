@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
- 
-  devise_for :users
   root to: 'homes#top'
+  devise_for :users
+ 
   resources :books, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   resources :users, only: [:index, :show, :edit, :update] do 
-      resources :relationships, only: [:create, :destroy]
-       get 'followings' => 'relationships#followings', as: 'followiings'
-       get 'followers' => 'relationships#followers',  as: 'followers'
+      member do 
+          get :follows, :followers
+      end 
+      resource :relationships, only: [:create, :destroy]
    end 
    
    get "/home/about" => "homes#about", as: "about"
