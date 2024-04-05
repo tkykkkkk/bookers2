@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :ensure_correct_user, only: [:edit, :update]
   
   def index 
     @users = User.all
-    @user = current_user
-    @new_book = Book.new
+    @book = Book.new
   end 
 
   # フォロー一覧
@@ -19,11 +20,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @new_book = Book.new
     @user = User.find(params[:id])
     @books = @user.books 
-    @following_users = @user.following_users
-    @follower_users = @user.follower_users
+    @book = Book.new
   end
 
 
@@ -51,4 +50,10 @@ class UsersController < ApplicationController
    params.require(:user).permit(:name, :profile_image, :introduction)
   end 
 
+  def ensure_correct_user
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to user_path(current_user)
+    end
+  end 
 end 

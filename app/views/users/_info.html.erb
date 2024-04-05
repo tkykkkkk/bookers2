@@ -1,0 +1,37 @@
+<table class='table'>
+  <tr><%= image_tag user.get_profile_image, size:'100x100' %></tr>
+  <tr>
+	  <th>name</th>
+	  <th><%= user.name %></th>
+  </tr>
+  <tr>
+	  <th>introduction</th>
+	  <th><%= user.introduction %></th>
+  </tr>
+  <tr>
+    <th>follows</th>
+    <td>
+        <%= link_to follows_user_path(user) do %>
+        <h6><%= user.followers.count %></h6>
+        <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th>followers</th>
+    <td>
+        <%= link_to followers_user_path(user) do %>
+        <h6><%= user.followeds.count %></h6>
+        <% end %>
+    </td>
+  </tr>
+</table>
+　
+<div class='row'>
+  <% if current_user != user %>
+    <td><%= render "relationships/follow_btn", user: user %></td>
+  <% else %>
+    <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block edit_user_#{user.id}" do %>
+      <i class="fas fa-user-cog"></i>
+    <% end %>
+  <% end %>
+</div>
