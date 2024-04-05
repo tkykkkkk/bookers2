@@ -1,0 +1,45 @@
+<h2>Followers</h2>
+ <table class='table'>
+     <thead>
+         <tr>
+             <th>image</th>
+             <th>name</th>
+             <th></th>
+             <th></th>
+             <th colspan="5"></th>
+         </tr>
+     </thead>
+     <tbody>
+      <% if @users.exists? %>
+      <% @users.each do |user| %>
+         <tr>
+             <td>
+                <%= link_to user_path(user) do %>
+                <%= image_tag user.get_profile_image(50,50) %>
+                <% end %>
+              </td>
+             <td><%= user.name %></td>
+             <td>
+              <%= link_to follows_user_path(user) do %>
+               <h6>フォロー: <%= user.following_users.count %></h6>
+              <% end %>
+              </td>
+             <td>
+              <%= link_to followers_user_path(user) do %>
+               <h6>フォロワー: <%= user.follower_users.count %></h6>
+              <% end %>
+              </td>
+              <td>
+                <%= link_to 'show', user_path(user.id) %>
+              </td>
+         </tr>
+         <% end %>
+         <% else %>
+            <td>
+             <h2>ユーザーはいません</h2>
+            </td>
+         <% end %>
+     </tbody>
+ </table>
+
+
