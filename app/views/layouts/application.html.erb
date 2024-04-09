@@ -80,9 +80,11 @@
       </div>
      </div>
     </nav>
+    <div class="text-center">
+    <%= render 'searches/search' %>
+    </div>
   </header>
   <p><%= flash[:notice] %></p>
-  
     <%= yield %>
     <footer>
         <div class="container mt-5">
